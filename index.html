@@ -1,0 +1,61 @@
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
+  <title>До лета осталось</title>
+</head>
+<body>
+  <div class="container">
+    <h1>До начала лета осталось</h1>
+  
+    <h1 id="clock"></h1>
+  </div>
+
+  <script lang="js">
+    const oneDay = 24*60*60*1000;
+    const oneHour = 60*60*1000;
+    const oneMinute = 60*1000;
+    const oneSecond = 1000;
+    function getCounters(from, to) {
+      if (to < from) {
+        return {}
+      }
+      let diff = to.getTime() - from.getTime()
+      let days = Math.floor(diff / oneDay)
+      let hours = Math.floor((diff - (days * oneDay)) / oneHour)
+      let minutes = Math.floor((diff - (days * oneDay) - (hours * oneHour)) / oneMinute)
+      let seconds = Math.floor((diff - (days * oneDay) - (hours * oneHour) - (minutes * oneMinute)) / oneSecond)
+      return {days, hours, minutes, seconds}
+    }
+    const clock = document.getElementById("clock");
+    let firstDate = new Date();
+    let currentYear = firstDate.getFullYear();
+    let secondDate = new Date(currentYear,06,01);
+
+    if (firstDate < secondDate) {
+      setInterval(
+        () => {
+          firstDate = new Date();
+          let counters = getCounters(firstDate, secondDate);
+          let content = `Осталось ${counters.days} дней ${counters.hours} часов ${counters.minutes} минут ${counters.seconds} секунд`;
+          clock.textContent = content;
+        }, 1000
+      );
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Aclonica';font-size: 22px;
+      background-image: url(https://cdn.iconscout.com/icon/premium/png-256-thumb/cloud-sun-576214.png)
+    }
+    .container {
+      margin: auto;
+      text-align: center;
+      background-color: azure;
+      width: 1200px;
+      margin-top: 25%;
+    }
+  </style>
+</body>
+</html>
