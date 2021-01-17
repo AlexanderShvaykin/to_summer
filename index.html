@@ -14,10 +14,38 @@
   </div>
 
   <script lang="js">
+    const dayWords = ["день", "дня", "дней"]
+    const minuteWords = ["минута", "минуты", "минут"]
+    const hourWords = ["час", "часа", "часов"]
+    const secondWords = ["секунда", "секунды", "секунд"]
     const oneDay = 24*60*60*1000;
     const oneHour = 60*60*1000;
     const oneMinute = 60*1000;
     const oneSecond = 1000;
+    function printWordCount(words, size) {
+      let word = ""
+      let f = (number, list)=> {
+        if (number === 0) {
+          return list[2];
+        }
+        if (number === 1) {
+          return list[0];
+        }
+        if (1 < number && number < 5) {
+          return list[1];
+        }
+        if (number >= 5 && number < 20) {
+          return list[2];
+        }
+      }
+      if (size >= 20) {
+        let stringSize = size.toString();
+        word = f(parseInt(stringSize[stringSize.length - 1]), words);
+      } else {
+        word = f(size, words);
+      }
+      return `${size} ${word}`;
+    }
     function getCounters(from, to) {
       if (to < from) {
         return {}
@@ -39,7 +67,7 @@
         () => {
           firstDate = new Date();
           let counters = getCounters(firstDate, secondDate);
-          let content = `Осталось ${counters.days} дней ${counters.hours} часов ${counters.minutes} минут ${counters.seconds} секунд`;
+          let content = `Осталось ${printWordCount(dayWords, counters.days)} ${printWordCount(hourWords,counters.hours)} ${printWordCount(minuteWords,counters.minutes)} ${printWordCount(secondWords,counters.seconds)}`;
           clock.textContent = content;
         }, 1000
       );
