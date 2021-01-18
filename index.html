@@ -67,7 +67,7 @@
         () => {
           firstDate = new Date();
           let counters = getCounters(firstDate, secondDate);
-          let content = `Осталось ${printWordCount(dayWords, counters.days)} ${printWordCount(hourWords,counters.hours)} ${printWordCount(minuteWords,counters.minutes)} ${printWordCount(secondWords,counters.seconds)}`;
+          let content = `${printWordCount(dayWords, counters.days)} ${printWordCount(hourWords,counters.hours)} ${printWordCount(minuteWords,counters.minutes)} ${printWordCount(secondWords,counters.seconds)}`;
           clock.textContent = content;
         }, 1000
       );
